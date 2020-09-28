@@ -1,29 +1,14 @@
 # vue_shop
 
-## Project setup
-```
-yarn install
-```
+## 项目介绍
+  一个关于vue的后台管理项目
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## 技术栈
+  vue + vue-router + axios + elementUI + echarts
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## 登陆
+  登录成功 -> 主页
+  登陆失败 -> 提示用户
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 技术点
+   http的无状态 保持登陆状态的时候 需要进行token验证
