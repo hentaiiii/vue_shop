@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-     <el-button type="success">
-       <router-link to="/login">去登陆</router-link>
-     </el-button>
      <router-view></router-view>
   </div>
 </template>
@@ -15,6 +12,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 </style>
