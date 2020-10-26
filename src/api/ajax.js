@@ -10,6 +10,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 
 // 添加请求拦截器
 axios.interceptors.request.use(config => {
+  // 为请求头对象添加token【验证的 Authorization
+  config.headers.Authorization = window.sessionStorage.getItem('loginToken')
   const {method, data} = config
   if(method.toUpperCase() === 'post' && data instanceof Object){
     qs.stringify(data)

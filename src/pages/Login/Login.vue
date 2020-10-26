@@ -102,7 +102,6 @@ export default {
             message: "登陆成功！",
             type: "success"
           })
-          console.log(result)
           // 保存token
           window.sessionStorage.setItem('loginToken', result.data.token)
           // 跳转到个人中心
