@@ -29,3 +29,43 @@ import ajax from './ajax'
 
  // 删除单个用户
  export const deleteUserById = (id) => ajax.delete(`/users/${id}`)
+
+ // 获取所有权限列表
+ export const reqRights = () => ajax.get('rights/list')
+
+ // 树状获取所有权限列表
+ export const reqRightsByTree = () => ajax.get('rights/tree')
+
+ // 角色列表
+ export const reqRoles = () => ajax.get('roles')
+
+ // 添加角色
+ export const reqAddRole = ({roleName, roleDesc}) => ajax.post('roles', {
+  roleName,
+  roleDesc
+ })
+
+ // 根据 ID 查询角色
+ export const reqRole = (id) => ajax.get(`roles/${id}`)
+
+ // 编辑提交角色
+ export const putRole = ({roleId, roleName, roleDesc}) => ajax.put(`roles/${roleId}`, {
+  roleName,
+  roleDesc
+ })
+
+ // 删除角色
+ export const reqDelteRole = (roleId) => ajax.delete(`roles/${roleId}`)
+
+ //  删除角色指定权限
+ export const deleteRights = (roleId, rightId) => ajax.delete(`roles/${roleId}/rights/${rightId}`)
+
+ // 角色授权
+ export const reqSetRights = (roleId, rids) => ajax.post(`roles/${roleId}/rights`, {
+  rids
+ })
+
+ // 分配用户角色
+ export const reqSetRole = (id, rid) => ajax.put(`users/${id}/role`, {
+  rid
+ })

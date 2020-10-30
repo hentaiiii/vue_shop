@@ -65,6 +65,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="showSetRoleDialog(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -143,6 +144,35 @@
         <el-button type="primary" @click="editUser">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 用户分配角色对话框 -->
+    <el-dialog title="分配角色" :visible.sync="setRoleDialog" width="50%" @close="closeSetRoleDialog">
+      <div>
+        <p>
+          当前用户：<span>{{ userInfo.username }}</span>
+        </p>
+        <p>
+          当前角色：<span>{{ userInfo.role_name }}</span>
+        </p>
+        <div>
+          <el-select v-model="roleId" placeholder="请选择">
+            <el-option
+              v-for="item in roleList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id "
+            >
+            </el-option>
+          </el-select>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialog = false">取 消</el-button>
+        <el-button type="primary" @click="setRole"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -153,7 +183,9 @@ import {
   reqAddUser,
   reqUserById,
   putUserById,
-  deleteUserById
+  deleteUserById,
+  reqRoles,
+  reqSetRole
 } from "../../api/index";
 export default {
   data() {
@@ -181,7 +213,9 @@ export default {
       queryInfo: {
         query: "",
         pagenum: 1,
-        pagesize: window.sessionStorage.getItem('pagesize') ? window.sessionStorage.getItem('pagesize')*1 : 2
+        pagesize: window.sessionStorage.getItem("pagesize")
+          ? window.sessionStorage.getItem("pagesize") * 1
+          : 2
       },
       users: [], // 用户列表
       total: 0, // 用户总数
@@ -215,6 +249,7 @@ export default {
       editDialogVisible: false, // 控制编辑对话框的显示和隐藏
       editRuleForm: {}, // 被编辑的用户信息
       editRules: {
+        // 编辑用户表单验证规则
         mobile: [
           { required: true, message: "请输入电话", trigger: "blur" },
           { validator: mobileCheck, trigger: "blur" }
@@ -223,7 +258,11 @@ export default {
           { required: true, message: "请输入邮箱", trigger: "blur" },
           { validator: emailCheck, trigger: "blur" }
         ]
-      }
+      },
+      setRoleDialog: false, // 控制分配角色对话框的显示和隐藏
+      userInfo: {}, // 当前用户信息对象
+      roleList: [], // 角色列表
+      roleId: '', // 当前选中的id值
     };
   },
   created() {
@@ -243,10 +282,10 @@ export default {
 
     // 分页页数改变事件
     handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
+      this.queryInfo.pagesize = newSize;
       // 本地储存每页个数
-      window.sessionStorage.setItem('pagesize', newSize)
-      this.getUsers()
+      window.sessionStorage.setItem("pagesize", newSize);
+      this.getUsers();
     },
 
     // 当前页数改变事件
@@ -341,23 +380,54 @@ export default {
       })
         .then(async () => {
           // 删除用户
-          const res = await deleteUserById(id)
-          if(res.meta.status !== 200){
-            return this.$message.error(res.meta.msg)
+          const res = await deleteUserById(id);
+          if (res.meta.status !== 200) {
+            return this.$message.error(res.meta.msg);
           }
           // 提示删除成功
           // 刷新页面
-          this.$message.success(res.meta.msg)
-          this.getUsers()
-          
+          this.$message.success(res.meta.msg);
+          this.getUsers();
         })
         .catch(() => {
-          console.log('aaaaa')
+          console.log("aaaaa");
           this.$message({
             type: "info",
             message: "已取消删除"
-          })
+          });
         });
+    },
+
+    // 分配角色按钮
+    async showSetRoleDialog(userInfo) {
+      this.userInfo = userInfo;
+      // 获取角色列表
+      const res = await reqRoles();
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg);
+      }
+      this.roleList = res.data
+
+      this.setRoleDialog = true
+
+    },
+
+    // 给用户分配角色
+    async setRole() {
+      const res = await reqSetRole(this.userInfo.id, this.roleId)
+      if(res.meta.status !== 200){
+        return this.$message.error(res.meta.msg)
+      }
+
+      this.$message.success(res.meta.msg)
+      this.getUsers()
+      this.setRoleDialog = false
+    },
+
+    // 分配用户角色对话框关闭事件
+    closeSetRoleDialog() {
+      this.roleId = ''
+      this.userInfo = {}
     }
   }
 };
