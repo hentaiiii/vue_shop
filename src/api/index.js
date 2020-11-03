@@ -69,3 +69,22 @@ import ajax from './ajax'
  export const reqSetRole = (id, rid) => ajax.put(`users/${id}/role`, {
   rid
  })
+
+ // 商品分类数据列表
+ export const reqCategories = (queryInfo) => ajax.get('categories', {
+   params: queryInfo
+ })
+
+ // 添加分类
+ export const reqAddCate = (addCateObj) => ajax.post('categories', addCateObj)
+
+ // 根据 id 查询分类
+ export const reqCateById = (id) => ajax.get(`categories/${id}`)
+
+ // 编辑提交分类
+ export const putCate = (id, cat_name) => ajax.put(`categories/${id}`, {
+  cat_name
+ })
+
+ // 删除分类
+ export const delCate = (id) => ajax.delete(`categories/${id}`)

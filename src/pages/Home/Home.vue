@@ -123,7 +123,6 @@ export default {
 
     // 激活子菜单
     activeItem(activePath) {
-      console.log(activePath)
       // 持久化
       window.sessionStorage.setItem('activePath', activePath)
       this.activePath = activePath
