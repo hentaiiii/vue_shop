@@ -17,3 +17,6 @@ html, body, #app{
 .el-table{
   margin: 10px 0;
 }
+.el-cascader-menu {
+  height: 200px;
+}

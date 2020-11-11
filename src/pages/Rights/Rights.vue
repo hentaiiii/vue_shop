@@ -35,16 +35,15 @@ export default {
     };
   },
   created() {
-    this.getRights();
+    this.getRights()
   },
   methods: {
     async getRights() {
       const res = await reqRights();
       if (res.meta.status !== 200) {
-        return this.$message.error(this.meta.msg);
+        return this.$message.error(this.meta.msg)
       }
-      this.rightsList = res.data;
-      console.log(res.data);
+      this.rightsList = res.data
     }
   }
 };

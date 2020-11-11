@@ -88,3 +88,34 @@ import ajax from './ajax'
 
  // 删除分类
  export const delCate = (id) => ajax.delete(`categories/${id}`)
+
+ // 参数列表
+ export const reqAttributes = (id, sel) => ajax.get(`categories/${id}/attributes`, {
+   params: {
+     sel
+   }
+ })
+
+
+ // 添加动态参数或者静态属性
+ export const reqAddParam = (id, attr_name, attr_sel) => ajax.post(`categories/${id}/attributes`, {
+  attr_name,
+  attr_sel
+ })
+
+ // 根据 ID 查询参数
+export const reqParamById = (id, attrId, attr_sel) => ajax.get(`categories/${id}/attributes/${attrId}`, {
+  params: {
+    attr_sel
+  }
+})
+
+// 编辑提交参数
+export const reqPutParam= (id, attrId, attr_name, attr_sel, attr_vals) => ajax.put(`categories/${id}/attributes/${attrId}`, {
+  attr_name,
+  attr_sel,
+  attr_vals
+})
+
+// 删除参数
+export const reqDeleteParamById = (id, attrid) => ajax.delete(`categories/${id}/attributes/${attrid}`)
