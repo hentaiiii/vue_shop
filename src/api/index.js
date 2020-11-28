@@ -96,7 +96,6 @@ import ajax from './ajax'
    }
  })
 
-
  // 添加动态参数或者静态属性
  export const reqAddParam = (id, attr_name, attr_sel) => ajax.post(`categories/${id}/attributes`, {
   attr_name,
@@ -119,3 +118,14 @@ export const reqPutParam= (id, attrId, attr_name, attr_sel, attr_vals) => ajax.p
 
 // 删除参数
 export const reqDeleteParamById = (id, attrid) => ajax.delete(`categories/${id}/attributes/${attrid}`)
+
+// 获取商品列表数据
+export const reqGoodList = (queryInfo) => ajax.get('goods', {
+  params: queryInfo
+})
+
+// 删除商品
+export const reqDeleteGood = (id) => ajax.delete(`goods/${id}`)
+
+// 添加上篇
+export const reqAddGood = (addFromObj) => ajax.post('goods', addFromObj)

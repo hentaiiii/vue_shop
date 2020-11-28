@@ -91,9 +91,11 @@
         <el-form-item label="父级分类">
           <el-cascader
             v-model="selectKeys"
-            :options="parCateLsit"
+            :options="parCateList"
             :props="selectProps"
             @change="handleChange"
+            :disabled="optionsChanged"
+            :key="isResouceShow"
             :clearable="true"
           ></el-cascader>
         </el-form-item>
@@ -174,7 +176,7 @@ export default {
         cat_name: "",
         cat_level: 0 // 添加分类的层级
       },
-      parCateLsit: [], // 一二级分类
+      parCateList: [], // 一二级分类
       selectKeys: [], // 选中的父级分类的id数组
       selectProps: {
         // 联及选择器配置对象
@@ -190,7 +192,9 @@ export default {
         ]
       },
       editCateDialog: false, // 编辑分类的显示和隐藏
-      editCateRuleForm: {} // 当前被编辑的分类
+      editCateRuleForm: {}, // 当前被编辑的分类
+      optionsChanged: false, // 是否禁用联级选择器(没数据禁用)
+      isResouceShow: 0
     };
   },
   created() {
@@ -219,6 +223,8 @@ export default {
 
     // 获取一二级分类
     async getParCate() {
+      this.parCateList = []
+      ++this.isResouceShow
       const res = await reqCategories({
         type: 2,
         pagenum: this.queryInfo.pagenum,
@@ -227,7 +233,10 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.msg);
       }
-      this.parCateLsit = res.data.result;
+      if(res.data.result.length === 0){
+        this.optionsChanged = true
+      }
+      this.parCateList = res.data.result;
     },
 
     // 联级选择器change事件
@@ -318,19 +327,21 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }
-      ).catch(err => err)
-      if(confrim === 'cancel'){
-        return this.$message.error('已取消删除')
+      ).catch(err => err);
+      if (confrim === "cancel") {
+        return this.$message.error("已取消删除");
       }
       // 确定删除
-      const res = await delCate(id)
-      if(res.meta.status !== 200){
-        return this.$message.error(res.meta.msg)
+      const res = await delCate(id);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg);
       }
       // 删除成功
-      this.$message.success(res.meta.msg)
-      this.getCategories()
-    }
+      this.$message.success(res.meta.msg);
+      this.getCategories();
+    },
+
+   
   }
 };
 </script>

@@ -20,3 +20,9 @@ html, body, #app{
 .el-cascader-menu {
   height: 200px;
 }
+.el-steps{
+  margin: 20px auto;
+}
+.ql-editor {
+  height: 300px!important;
+}

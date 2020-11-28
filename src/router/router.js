@@ -9,6 +9,7 @@ import Params from '../pages/Params/Params.vue'
 import Categories from '../pages/Categories/Categories.vue'
 import Orders from '../pages/Orders/Orders.vue'
 import Reports from '../pages/Reports/Reports.vue'
+import AddGood from '../pages/Goods/AddGood.vue'
 
 
 export default [
@@ -24,6 +25,7 @@ export default [
     {path: '/categories', component: Categories},
     {path: '/orders', component: Orders},
     {path: '/reports', component: Reports},
+    {path: '/goods/add', component: AddGood},
     {path: '/home', redirect: '/welcome'}
   ]},
 ]

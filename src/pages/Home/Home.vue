@@ -38,10 +38,10 @@
               </template>
               <!-- 二级菜单 -->
               <el-menu-item
-                :index="child.path"
+                :index="'/' + child.path"
                 v-for="child in item.children"
                 :key="child.id"
-                @click="activeItem(child.path)"
+                @click="activeItem('/' + child.path)"
               >
                 <i class="el-icon-menu"></i>
                 <span>{{ child.authName }}</span>
@@ -110,7 +110,7 @@ export default {
     async getMenuList() {
       const res = await reqMenu();
       if (res.meta.status !== 200) {
-        this.$message("获取数据失败，请重试");
+        this.$message.error("获取数据失败，请重试");
         return;
       }
       this.menuList = res.data;

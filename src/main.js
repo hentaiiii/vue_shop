@@ -18,6 +18,27 @@ import './assets/fonts/iconfont.css'
 import ZkTable from 'vue-table-with-tree-grid'
 Vue.use(ZkTable)
 
+// 引入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+Vue.use(VueQuillEditor)
+
+
+// 自定义时间过滤器
+Vue.filter('dateFormat', (val) => {
+  const dt = new Date(val)
+  const y = dt.getFullYear()
+  const m = (dt.getMonth() + 1 + '').padStart(2, '0')
+  const d = (dt.getDate() + '').padStart(2, '0')
+  const HH = (dt.getHours() + '').padStart(2, '0')
+  const MM = (dt.getMinutes() + '').padStart(2, '0')
+  const SS = (dt.getSeconds() + '').padStart(2, '0')
+  return `${y}-${m}-${d} ${HH}:${MM}:${SS}`
+})
+
+
 Vue.config.productionTip = false
 
 new Vue({

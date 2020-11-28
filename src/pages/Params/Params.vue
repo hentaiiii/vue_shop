@@ -291,7 +291,6 @@ export default {
         return this.$message.error("获取参数失败，请稍后重试!");
       }
       this.cateList = res.data;
-      console.log(res.data);
     },
 
     // 联级菜单改变事件
@@ -418,7 +417,6 @@ export default {
 
     // 删除参数
     async deleteParam(attr_id) {
-      console.log(attr_id);
       const isConfrim = await this.$confirm(
         "此操作将永久删除该参数, 是否继续?",
         "提示",
