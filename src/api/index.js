@@ -137,3 +137,6 @@ export const reqGetOrders = (queryInfo) => ajax.get('orders', {
 
 // 查看物流信息
 export const reqGetKuaidi = (id) => ajax.get(`kuaidi/${id}`)
+
+// 基于时间统计的折线图
+export const reqReport = () => ajax.get('reports/type/1')
