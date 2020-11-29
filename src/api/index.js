@@ -127,5 +127,13 @@ export const reqGoodList = (queryInfo) => ajax.get('goods', {
 // 删除商品
 export const reqDeleteGood = (id) => ajax.delete(`goods/${id}`)
 
-// 添加上篇
+// 添加商品
 export const reqAddGood = (addFromObj) => ajax.post('goods', addFromObj)
+
+// 订单数据列表
+export const reqGetOrders = (queryInfo) => ajax.get('orders', {
+  params: queryInfo
+})
+
+// 查看物流信息
+export const reqGetKuaidi = (id) => ajax.get(`kuaidi/${id}`)
